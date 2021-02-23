@@ -80,17 +80,27 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-lx">
+                <div class="title m-b-md">
                    Downloads
                 </div>
 
-                
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">{{ __('New Software') }}</div>
             
-                <div class="links">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                <div>
                     @foreach($software as $s)
-                    <a href="{{$s->software_download_url}}" >{{$s->software_name}}</a>
+                    <li><a href="{{$s->software_download_url}}" >{{$s->software_name}}</a></li>
                     @endforeach
-                   
                 </div>
             </div>
         </div>

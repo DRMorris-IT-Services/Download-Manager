@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index')->name('welcome');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/software', 'SoftwareController@index')->name('software');
+Route::get('/software/add', 'SoftwareController@create')->name('software.add');
+Route::post('/software/create', 'SoftwareController@store')->name('software.create');
