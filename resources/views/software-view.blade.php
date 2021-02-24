@@ -17,6 +17,14 @@
                     @foreach ($software as $s)
 
                     <div class="form-group row">
+                        <label for="api_key" class="col-md-4 col-form-label text-md-right">{{ __('Software API') }}</label>
+
+                        <div class="col-md-8">
+                            {{$s->api_key}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Software Name') }}</label>
 
                         <div class="col-md-6">
