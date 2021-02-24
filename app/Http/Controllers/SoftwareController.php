@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class SoftwareController extends Controller
 {
@@ -48,27 +49,24 @@ class SoftwareController extends Controller
     {
         //
 
+        $api_key = Str::random(60);
+
         $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string',  'max:255', ],
-            'version' => ['required', 'numeric', 'between:0,99.99' ],
-            'url' => ['required', 'string',  'max:555' ],
-            'file' => ['required','mimes:pdf,xlx,csv',' max:8048'],
+            'name' => 'required', 'string', 'max:255',
+            'description' => 'required', 'string',  'max:255', 
+            'version' => 'required', 'numeric', 'between:0,99.99' ,
+            'url' => 'required', 'string',  'max:555' ,
+        
             ]);
 
             Software::create([
+                'api_key' => $api_key,
                 'software_name' => $request['name'],
                 'software_description' => $request['description'],
                 'software_version' => $request['version'],
                 'software_download_url' => $request['url'],
             ]);
-
-           
-            $fileName = time().'.'.$request->file->extension();  
-   
-            $request->file->move(public_path('uploads'), $fileName);
-           
-
+        
 
         return redirect('/software');
     }

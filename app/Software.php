@@ -16,6 +16,6 @@ class Software extends Model
      * @var array
      */
     protected $fillable = [
-        'software_name', 'software_description', 'software_version', 'software_download_url'
+        'api_key','software_name', 'software_description', 'software_version', 'software_download_url'
     ];
 }

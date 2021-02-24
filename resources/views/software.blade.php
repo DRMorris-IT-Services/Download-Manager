@@ -20,7 +20,7 @@
                             <th>Software</th>
                             <th>Description</th>
                             <th>Version</th>
-                            <th>Download</th>
+                            
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -30,8 +30,9 @@
                             <td>{{$s->software_name}}</td>
                             <td>{{$s->software_description}}</td>
                             <td>{{$s->software_version}}</td>
-                            <td>{{$s->software_download_url}}</td>
-                            <td></td>
+                        
+                            <td><a href="{{route('software.view',['id' => $s->api_key])}}">View</a>
+                            <a href="{{route('software.edit',['id' => $s->api_key])}}"> Edit</a></td>
                                 
                         </tr>
                         @endforeach
