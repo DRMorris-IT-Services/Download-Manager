@@ -21,7 +21,7 @@ class SoftwareController extends Controller
     {
         //
         return view('software',[
-            'software' => $software->get(),
+            'software' => $software->paginate(10),
         ]);
     }
 
@@ -68,7 +68,7 @@ class SoftwareController extends Controller
             ]);
         
 
-        return redirect('/software');
+        return redirect('/software')->withStatus('Successfully Created');
     }
 
     /**
@@ -77,9 +77,11 @@ class SoftwareController extends Controller
      * @param  \App\Software  $software
      * @return \Illuminate\Http\Response
      */
-    public function show(Software $software)
+    public function show(Software $software, $id)
     {
         //
+
+        return view('software-view', ['software' => $software->where('api_key',$id)->get()]);
     }
 
     /**
@@ -88,9 +90,10 @@ class SoftwareController extends Controller
      * @param  \App\Software  $software
      * @return \Illuminate\Http\Response
      */
-    public function edit(Software $software)
+    public function edit(Software $software, $id)
     {
         //
+        return view('software-edit', ['software' => $software->where('api_key',$id)->get()]);
     }
 
     /**
@@ -100,9 +103,27 @@ class SoftwareController extends Controller
      * @param  \App\Software  $software
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Software $software)
+    public function update(Request $request, Software $software, $id)
     {
         //
+
+        $validatedData = $request->validate([
+            'name' => 'required', 'string', 'max:255',
+            'description' => 'required', 'string',  'max:255', 
+            'version' => 'required', 'numeric', 'between:0,99.99' ,
+            'url' => 'required', 'string',  'max:555' ,
+        
+            ]);
+
+            Software::where('api_key',$id)
+                ->update([
+                'software_name' => $request['name'],
+                'software_description' => $request['description'],
+                'software_version' => $request['version'],
+                'software_download_url' => $request['url'],
+            ]);
+
+        return redirect('software')->withStatus('Update Successful');
     }
 
     /**

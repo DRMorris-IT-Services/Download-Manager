@@ -17,7 +17,7 @@ class ApiController extends Controller
     {
         //
 
-        return $software->where('api_key',$id)->get();
+        return $software->select('api_key','software_name', 'software_version')->where('api_key',$id)->get();
         
     }
 

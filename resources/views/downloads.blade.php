@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Software') }}</div>
+                <div class="card-header">{{ __('Downloads') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -17,28 +17,28 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>Name</th>
+                            <th>Email</th>
                             <th>Software</th>
-                            <th>Description</th>
                             <th>Version</th>
-                            
+                            <th>Download Date</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($software as $s)
-                        <tr>
-                            <td>{{$s->software_name}}</td>
-                            <td>{{$s->software_description}}</td>
-                            <td>{{$s->software_version}}</td>
+                            @foreach($downloads as $dn)
+                                <tr>
+                                    <td>{{$dn->name}}</td>
+                                    <td>{{$dn->email}}</td>
+                                    <td>{{$dn->software_name}}</td>
+                                    <td>{{$dn->software_version}}</td>
+                                    <td>{{$dn->created_at}}</td>
+                                    <td><a href="{{ route('downloads.delete',['id' => $dn->id])}}">Delete</a></td>
+                            @endforeach
                         
-                            <td><a href="{{route('software.view',['id' => $s->api_key])}}">View</a>
-                            <a href="{{route('software.edit',['id' => $s->api_key])}}"> Edit</a></td>
-                                
-                        </tr>
-                        @endforeach
                         </tbody>
                     </table>
-                    {{ $software->links() }}
+                    {{ $downloads->links() }}
                    
                 </div>
             </div>

@@ -8,6 +8,11 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
+        <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+<!-- Styles -->
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 
         <!-- Styles -->
         <style>
@@ -84,13 +89,76 @@
                    Downloads
                 </div>
 
+                @foreach($software as $s)
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                                  
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$s->id}}">
+                    {{$s->software_name}} / {{$s->software_version}}
+                      </button>
+                    </div>
                 
-            
-                <div class="links">
-                    @foreach($software as $s)
-                    <a href="{{$s->software_download_url}}" >{{$s->software_name}}</a>
+                    <!-- Modal -->
+                    <form method="POST" action="{{ route('downloads.create',['id' => $s->api_key]) }}">
+                        @csrf
+
+                        
+                    <div class="modal fade" id="exampleModal{{$s->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Download Request</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="software" value="{{$s->software_name}}">
+                            <input type="hidden" name="version" value="{{$s->software_version}}">
+                            
+                            <p>Please complete the form below to proceed with the download of selected software.</p>
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('Name') }}</label>
+        
+                                <div class="col-md-8">
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="url" autofocus>
+        
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email" class="col-md-2 col-form-label text-md-right">{{ __('Email') }}</label>
+        
+                                <div class="col-md-8">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="url" autofocus>
+        
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Download</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
                     @endforeach
-                   
+                
+                    
                 </div>
             </div>
         </div>
